@@ -2,16 +2,22 @@
 
 namespace App\Http\Controllers\Api;
 
+use Illuminate\Database\QueryException;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use App\Http\Resources\CategoryResource;
 
 class CategoryController extends Controller
 {
     public function index(): JsonResponse
     {
-        $categories = Category::all();
+        $categories = Category::with('products')->paginate(10);
+
+        $categories->through(function ($category) {
+            return new CategoryResource($category);
+        });
 
         return response()->json([
             'success' => true,
@@ -21,7 +27,7 @@ class CategoryController extends Controller
     }
     public function show(int $id): JsonResponse
     {
-        $category = Category::find($id);
+        $category = Category::with('products')->find($id);
 
         if (!$category) {
             return response()->json([
@@ -33,7 +39,7 @@ class CategoryController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'Detail kategori berhasil diambil.',
-            'data' => $category,
+            'data' => new CategoryResource($category),
         ]);
     }
     public function store(Request $request): JsonResponse
@@ -49,7 +55,7 @@ class CategoryController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'Kategori berhasil ditambahkan.',
-            'data' => $category,
+            'data' => new CategoryResource($category),
         ], 201);
 
     }
@@ -74,7 +80,7 @@ class CategoryController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'Kategori berhasil diperbarui.',
-            'data' => $category,
+            'data' => new CategoryResource($category),
         ]);
     }
     public function destroy(int $id): JsonResponse
@@ -88,11 +94,18 @@ class CategoryController extends Controller
             ], 404);
         }
 
+    try {
         $category->delete();
-
+    } catch (QueryException $e) {
         return response()->json([
-            'success' => true,
-            'message' => 'Kategori berhasil dihapus.',
-        ]);
+            'success' => false,
+            'message' => 'Kategori tidak dapat dihapus karena masih memiliki produk.',
+        ], 409);
+    }
+
+    return response()->json([
+        'success' => true,
+        'message' => 'Kategori berhasil dihapus.',
+    ]);
     }
 }
