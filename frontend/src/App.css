@@ -1,0 +1,498 @@
+/* Layout utama aplikasi */
+.app {
+  min-height: 100vh;
+  display: flex;
+  background: #f8fafc;
+}
+
+/* Sidebar */
+.sidebar {
+  width: 250px;
+  min-height: 100vh;
+  flex-shrink: 0;
+  background: #172b4d;
+  color: #ffffff;
+  padding: 24px 18px;
+}
+
+/* Logo dan nama aplikasi */
+.sidebar h2 {
+  font-size: 24px;
+  margin: 0 0 6px;
+}
+
+.sidebar > p {
+  font-size: 12px;
+  color: #cbd5e1;
+  margin: 0 0 40px;
+}
+
+/* Navigasi sidebar */
+.sidebar nav {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.sidebar nav a {
+  display: block;
+  padding: 12px 14px;
+  border-radius: 8px;
+  color: #cbd5e1;
+  transition: background 0.2s;
+}
+
+.sidebar nav a:hover,
+.sidebar nav a.active {
+  background: #29456d;
+  color: #ffffff;
+}
+
+/* Area konten utama */
+.main-content {
+  flex: 1;
+  min-width: 0;
+  padding: 32px;
+}
+
+/* Header halaman */
+.main-content header {
+  margin-bottom: 32px;
+}
+
+.main-content header h1 {
+  margin: 0 0 8px;
+  font-size: 28px;
+  color: #172b4d;
+}
+
+.main-content header p {
+  margin: 0;
+  color: #64748b;
+}
+
+/* Kartu ringkasan dashboard */
+.dashboard-cards {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.card {
+  background: #ffffff;
+  padding: 24px;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
+}
+
+.card h3 {
+  margin: 0 0 16px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #64748b;
+}
+
+.card p {
+  margin: 0;
+  font-size: 30px;
+  font-weight: 700;
+  color: #172b4d;
+}
+
+/* Tampilan tablet */
+@media (max-width: 1000px) {
+  .dashboard-cards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* Tampilan ponsel */
+@media (max-width: 600px) {
+  .app {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    width: 100%;
+    min-height: auto;
+  }
+
+  .sidebar > p {
+    margin-bottom: 20px;
+  }
+
+  .sidebar nav {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .main-content {
+    padding: 20px;
+  }
+
+  .dashboard-cards {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Tabel produk */
+.table-container {
+  width: 100%;
+  overflow-x: auto;
+  margin-top: 20px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+}
+
+.product-table {
+  width: 100%;
+  min-width: 900px;
+  border-collapse: collapse;
+}
+
+.product-table th,
+.product-table td {
+  padding: 16px;
+  text-align: left;
+  border-bottom: 1px solid #e2e8f0;
+  white-space: nowrap;
+}
+
+.product-table th {
+  background: #f1f5f9;
+  color: #475569;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.product-table td {
+  color: #334155;
+  font-size: 14px;
+}
+
+.product-table tbody tr:hover {
+  background: #f8fafc;
+}
+
+.product-table tbody tr:last-child td {
+  border-bottom: none;
+}
+/* Kolom pencarian produk */
+.search-container {
+  margin: 20px 0;
+}
+
+.search-container input {
+  width: 100%;
+  max-width: 400px;
+  padding: 12px 16px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  background: #ffffff;
+  outline: none;
+}
+
+.search-container input:focus {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+/* Filter kategori produk */
+.filter-container {
+  margin: 20px 0;
+}
+
+.filter-container select {
+  width: 100%;
+  max-width: 400px;
+  padding: 12px 16px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #334155;
+  outline: none;
+}
+
+.filter-container select:focus {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+/* Layout pencarian dan filter produk */
+.product-filters {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin: 20px 0;
+}
+
+.product-filters .search-container,
+.product-filters .filter-container {
+  margin: 0;
+  flex: 1;
+  min-width: 220px;
+}
+
+.product-filters input,
+.product-filters select {
+  max-width: none;
+}
+.product-filters .search-container input {
+  width: 100%;
+}
+
+.product-filters .filter-container select {
+  width: 100%;
+}
+
+.product-filters .search-container {
+  flex: 2;
+}
+
+.product-filters .filter-container {
+  flex: 1;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+/* Tombol Edit */
+.action-buttons button:first-of-type {
+    background: #facc15;
+    color: #422006;
+}
+
+
+.action-buttons button:first-of-type:hover {
+    background: #eab308;
+}
+
+/* Tombol Hapus */
+.action-buttons button:last-child {
+  background: #ef4444;
+  color: #ffffff;
+}
+
+.action-buttons button:last-child:hover {
+  background: #dc2626;
+}
+/* Tombol Tambah Produk */
+.add-button {
+  margin-top: 20px;
+  padding: 10px 18px;
+  border: none;
+  border-radius: 8px;
+  background: #2563eb;
+  color: #ffffff;
+  font-weight: 600;
+  transition: background 0.2s;
+}
+
+.add-button:hover {
+  background: #1d4ed8;
+}
+
+.add-button:active,
+.action-buttons button:active {
+  transform: scale(0.97);
+}
+
+/* Container form produk */
+.form-container {
+  margin: 24px 0;
+  padding: 28px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.05);
+}
+
+.form-container h2 {
+  margin: 0 0 24px;
+  color: #172b4d;
+  font-size: 20px;
+}
+
+/* Kelompok input form */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 18px;
+}
+
+.form-group label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #334155;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  padding: 11px 14px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #334155;
+  outline: none;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.form-group textarea {
+  resize: vertical;
+}
+
+/* Tombol Tutup */
+.close-button {
+  padding: 10px 20px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  background: #f1f5f9;
+  color: #334155;
+  font-weight: 600;
+}
+
+.close-button:hover {
+  background: #e2e8f0;
+}
+.form-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+/* Kondisi tombol nonaktif */
+.form-actions button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.save-button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  background: #2563eb;
+  color: #fff;
+  font-weight: 600;
+}
+
+.save-button:hover {
+  background: #1d4ed8;
+}
+
+.close-button {
+  padding: 10px 20px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  background: #f1f5f9;
+  color: #334155;
+  font-weight: 600;
+}
+
+.action-buttons a {
+    display: inline-block;
+    padding: 8px 14px;
+    border-radius: 6px;
+    background: #2563eb;
+    color: #fff;
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background 0.2s;
+}
+
+.action-buttons a:hover {
+    background: #1d4ed8;
+}
+
+.reports-table {
+    margin-top: 32px;
+}
+
+.reports-table h2 {
+    margin-bottom: 16px;
+    color: #172b4d;
+    font-size: 20px;
+}
+/* Tombol aksi laporan */
+.report-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+
+.report-actions .add-button {
+    margin-top: 0;
+}
+
+/* Tombol Export Excel */
+.export-button {
+    padding: 10px 18px;
+    border: none;
+    border-radius: 8px;
+    background: #15803d;
+    color: #ffffff;
+    font-weight: 600;
+    transition: background 0.2s;
+}
+
+.export-button:hover {
+    background: #166534;
+}
+
+.export-button:active {
+    transform: scale(0.97);
+}
+
+/* Responsif untuk layar ponsel */
+@media (max-width: 600px) {
+    .report-actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .report-actions button {
+        width: 100%;
+    }
+}
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    max-height: 90vh;
+    overflow-y: auto;
+    background: white;
+    padding: 24px;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 450px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+.modal-content h2 {
+    margin-top: 0;
+}
+
+.modal-content .close-button {
+    margin-top: 16px;
+}

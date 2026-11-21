@@ -18,6 +18,7 @@ class DashboardController extends Controller
                 'total_categories' => Category::count(),
                 'total_stock' => Product::sum('stock'),
                 'total_low_stock_products' => Product::whereColumn('stock', '<=', 'minimum_stock')->count(),
+                'low_stock_products' => Product::with('category')->whereColumn('stock', '<=', 'minimum_stock')->get(),
                 'inventory_value' => Product::selectRaw(
                 'COALESCE(SUM(purchase_price * stock), 0) as total'
             )->value('total'),

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Exports\ProductExport;
+use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Product;
@@ -81,7 +83,7 @@ class ProductController extends Controller
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
             'purchase_price' => 'required|numeric|min:0',
-            'selling_price' => 'required|numeric|min:0',
+            'selling_price' => 'required|numeric|gte:purchase_price',
             'stock' => 'required|integer|min:0',
             'minimum_stock' => 'required|integer|min:0',
         ]);
@@ -94,7 +96,7 @@ class ProductController extends Controller
             'data' => new ProductResource($product->load('category')),
         ], 201);
     }
-    public function update(Request $request, int $id): JsonResponse {
+    public function update(Request $request, string $id): JsonResponse {
         $product = Product::find($id);
 
         if (!$product) {
@@ -110,7 +112,7 @@ class ProductController extends Controller
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
             'purchase_price' => 'required|numeric|min:0',
-            'selling_price' => 'required|numeric|min:0',
+            'selling_price' => 'required|numeric|gte:purchase_price',
             'stock' => 'required|integer|min:0',
             'minimum_stock' => 'required|integer|min:0',
         ]);
@@ -123,7 +125,7 @@ class ProductController extends Controller
             'data' => new ProductResource($product->load('category')),
         ]);
     }
-    public function destroy(int $id): JsonResponse{
+    public function destroy(string $id): JsonResponse{
         $product = Product::find($id);
 
         if (!$product) {
@@ -139,5 +141,12 @@ class ProductController extends Controller
             'success' => true,
             'message' => 'Produk berhasil dihapus.',
         ]);
+    }
+    public function export()
+    {
+        return Excel::download(
+            new ProductExport,
+            'laporan-produk-gudangku.xlsx'
+        );
     }
 }

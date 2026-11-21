@@ -10,6 +10,21 @@ use Illuminate\Http\Request;
 
 class AuthController extends Controller
 {
+    public function index(): JsonResponse
+    {
+        $users = User::select(
+            'id',
+            'name',
+            'email',
+            'created_at'
+        )->latest()->get();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Daftar pengguna berhasil diambil.',
+            'data' => $users,
+        ]);
+    }
     public function register(Request $request): JsonResponse
     {
         $validated = $request->validate([
