@@ -4,7 +4,9 @@ import api from '../services/api'
 function Users() {
     const [users, setUsers] = useState([])
     const [loading, setLoading] = useState(true)
+    const [isSubmitting, setIsSubmitting] = useState(false)
     const [error, setError] = useState('')
+    const [validationErrors, setValidationErrors] = useState({})
     const [showForm, setShowForm] = useState(false)
     const [editingId, setEditingId] = useState(null)
     const [selectedUser, setSelectedUser] = useState(null)
@@ -85,6 +87,11 @@ function Users() {
             ...prevData,
             [name]: value,
         }))
+
+        setValidationErrors((prevErrors) => ({
+            ...prevErrors,
+            [name]: [],
+        }))
     }
 
     const resetForm = () => {
@@ -94,6 +101,8 @@ function Users() {
             password: '',
             role: 'staff',
         })
+
+        setValidationErrors({})
         setEditingId(null)
         setShowForm(false)
     }
@@ -123,6 +132,8 @@ function Users() {
     }
     const handleSubmit = async (e) => {
         e.preventDefault()
+        setValidationErrors({})
+        setIsSubmitting(true)
 
         const payload = { ...formData }
 
@@ -139,23 +150,21 @@ function Users() {
                 alert('Pengguna berhasil ditambahkan!')
             }
 
-            resetForm()
             await fetchUsers()
+            resetForm()
         } catch (error) {
             console.error('Gagal menyimpan pengguna:', error)
 
             if (error.response?.data?.errors) {
-                const validationErrors = Object.values(
-                    error.response.data.errors
-                ).flat()
-
-                alert(validationErrors.join('\n'))
+                setValidationErrors(error.response.data.errors)
             } else {
                 alert(
                     error.response?.data?.message ||
                     'Gagal menyimpan pengguna.'
                 )
             }
+        } finally {
+            setIsSubmitting(false)
         }
     }
 
@@ -207,8 +216,7 @@ function Users() {
                     <h2>
                         {editingId ? 'Edit Pengguna' : 'Tambah Pengguna Baru'}
                     </h2>
-
-                    <form onSubmit={handleSubmit}>
+                    <form onSubmit={handleSubmit} noValidate >
                         <div className="form-group">
                             <label>Nama</label>
                             <input
@@ -219,18 +227,28 @@ function Users() {
                                 placeholder="Masukkan nama"
                                 required
                             />
+                            {validationErrors.name && (
+                                <small className="field-error">
+                                    {validationErrors.name[0]}
+                                </small>
+                            )}
                         </div>
 
                         <div className="form-group">
                             <label>Email</label>
-                            <input
-                                type="email"
-                                name="email"
-                                value={formData.email}
-                                onChange={handleInputChange}
-                                placeholder="Masukkan email"
-                                required
-                            />
+                                <input
+                                    type="email"
+                                    name="email"
+                                    value={formData.email}
+                                    onChange={handleInputChange}
+                                    placeholder="Masukkan email"
+                                    required
+                                />
+                            {validationErrors.email && (
+                                <small className="field-error">
+                                    {validationErrors.email[0]}
+                                </small>
+                            )}
                         </div>
 
                         <div className="form-group">
@@ -240,10 +258,15 @@ function Users() {
                                 name="password"
                                 value={formData.password}
                                 onChange={handleInputChange}
-                                placeholder="Masukkan password"
+                                placeholder="Masukkan password"                                
                                 required={!editingId}
                                 minLength="8"
                             />
+                            {validationErrors.password && (
+                                <small className="field-error">
+                                    {validationErrors.password[0]}
+                                </small>
+                            )}
                         </div>
 
                         <div className="form-group">
@@ -257,17 +280,30 @@ function Users() {
                                 <option value="admin">Admin</option>
                                 <option value="staff">Staff</option>
                             </select>
+                            {validationErrors.role && (
+                                <small className="field-error">
+                                    {validationErrors.role[0]}
+                                </small>
+                            )}
                         </div>
 
                         <div className="form-actions">
-                            <button type="submit" className="save-button">
-                                {editingId ? 'Perbarui Pengguna' : 'Simpan Pengguna'}
+                            <button
+                                type="submit"
+                                className="save-button"
+                                disabled={isSubmitting}
+                            >
+                                {isSubmitting
+                                    ? 'Menyimpan...'
+                                    : editingId
+                                        ? 'Perbarui Pengguna'
+                                        : 'Simpan Pengguna'}
                             </button>
-
                             <button
                                 type="button"
                                 className="close-button"
                                 onClick={resetForm}
+                                disabled={isSubmitting}
                             >
                                 Tutup
                             </button>
@@ -307,7 +343,6 @@ function Users() {
                             {new Date(selectedUser.created_at).toLocaleString('id-ID')}
                         </p>
                     </div>
-
                     <button
                         type="button"
                         className="close-button"
@@ -341,6 +376,7 @@ function Users() {
                                     <td>
                                         <div className="action-buttons">
                                             <button
+                                                className="detail-button"
                                                 type="button"
                                                 onClick={() => handleDetail(user.id)}
                                             >
@@ -348,6 +384,7 @@ function Users() {
                                             </button>
 
                                             <button
+                                                className="edit-button"
                                                 type="button"
                                                 onClick={() => handleEdit(user)}
                                             >
@@ -355,6 +392,7 @@ function Users() {
                                             </button>
 
                                             <button
+                                                className="delete-button"
                                                 type="button"
                                                 onClick={() => handleDelete(user.id)}
                                             >

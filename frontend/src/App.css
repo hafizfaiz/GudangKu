@@ -259,26 +259,65 @@
   gap: 8px;
   align-items: center;
 }
-/* Tombol Edit */
-.action-buttons button:first-of-type {
-    background: #facc15;
-    color: #422006;
+.detail-button {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 6px;
+    background: #2563eb;
+    color: #fff;
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background 0.2s;
 }
 
-
-.action-buttons button:first-of-type:hover {
-    background: #eab308;
+.detail-button:hover {
+    background: #1d4ed8;
+}
+.edit-button {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 6px;
+    background: #ecbf40;
+    color: #000000;
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background 0.2s;
+}
+.edit-button:hover {
+    background: #b59e0b;
 }
 
-/* Tombol Hapus */
-.action-buttons button:last-child {
-  background: #ef4444;
-  color: #ffffff;
+.delete-button {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 6px;
+    background: #ef4444;
+    color: #fff;
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background 0.2s;
 }
 
-.action-buttons button:last-child:hover {
-  background: #dc2626;
+.delete-button:hover {
+  background: #b91c1c;
 }
+
+.logout-button {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 6px;
+    background: #ef4444;
+    color: #fff;
+    text-decoration: none;
+    transition: background 0.2s;
+}
+.logout-button:hover {
+    background: #b91c1c;
+}
+
 /* Tombol Tambah Produk */
 .add-button {
   margin-top: 20px;
@@ -400,22 +439,6 @@
   font-weight: 600;
 }
 
-.action-buttons a {
-    display: inline-block;
-    padding: 8px 14px;
-    border-radius: 6px;
-    background: #2563eb;
-    color: #fff;
-    font-size: 13px;
-    font-weight: 600;
-    text-decoration: none;
-    transition: background 0.2s;
-}
-
-.action-buttons a:hover {
-    background: #1d4ed8;
-}
-
 .reports-table {
     margin-top: 32px;
 }
@@ -495,4 +518,32 @@
 
 .modal-content .close-button {
     margin-top: 16px;
+}
+
+.validation-errors {
+    margin-bottom: 20px;
+    padding: 14px 18px;
+    background: #fef2f2;
+    border: 1px solid #fecaca;
+    border-radius: 8px;
+    color: #b91c1c;
+}
+
+.validation-errors p {
+    margin: 4px 0;
+    font-size: 14px;
+}
+
+.field-error {
+    display: block;
+    margin-top: 6px;
+    color: #dc2626;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.save-button:disabled,
+.close-button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
 }

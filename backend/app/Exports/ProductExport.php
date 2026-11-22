@@ -8,8 +8,10 @@ use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithMapping;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
+use Maatwebsite\Excel\Concerns\WithColumnFormatting;
+use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
 
-class ProductExport implements FromCollection, WithHeadings, WithMapping, ShouldAutoSize
+class ProductExport implements FromCollection, WithHeadings, WithMapping, ShouldAutoSize, WithColumnFormatting
 {
     public function collection(): Collection
     {
@@ -43,6 +45,14 @@ class ProductExport implements FromCollection, WithHeadings, WithMapping, Should
             $product->selling_price,
             $product->stock,
             $product->minimum_stock,
+        ];
+    }
+
+    public function columnFormats(): array
+    {
+        return [
+            'F' => '"Rp" #,##0',
+            'G' => '"Rp" #,##0',
         ];
     }
 }

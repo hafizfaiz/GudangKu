@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\DashboardController;
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\ReportsController;
 
 // ========================================
 // PUBLIC ROUTES (Tanpa Login)
@@ -59,4 +60,6 @@ Route::middleware('auth:sanctum')->group(function () {
     // Logout Route
     Route::post('/logout', [AuthController::class, 'logout']);
 
+    // Reports Route
+    Route::get('/reports/stock-summary', [ReportsController::class, 'stockSummary']);
 });

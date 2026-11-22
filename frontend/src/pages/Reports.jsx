@@ -13,7 +13,7 @@ function Reports() {
         setError('')
 
         try {
-            const response = await api.get('/dashboard')
+            const response = await api.get('/reports/stock-summary')
             setReport(response.data.data)
             setLastUpdated(new Date())
         } catch (error) {

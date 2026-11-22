@@ -460,6 +460,7 @@ useEffect(() => {
                                         <td>
                                             <div className="action-buttons">
                                                 <button
+                                                    className="edit-button"
                                                     type="button"
                                                     onClick={() => handleEdit(product)}
                                                 >
@@ -467,6 +468,7 @@ useEffect(() => {
                                                 </button>
 
                                                 <button
+                                                    className="delete-button"
                                                     type="button"
                                                     onClick={() => handleDelete(product)}
                                                 >

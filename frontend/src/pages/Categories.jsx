@@ -195,14 +195,21 @@ function Categories() {
                     <td>{category.name}</td>
                     <td>{category.description || '-'}</td>
                     <td>
-                        <div className="action-buttons">
-                            <Link to={`/categories/${category.id}`}>
+                        <div 
+                        className="action-buttons">
+                            <Link className="detail-button" to={`/categories/${category.id}`}>
                                 Detail
                             </Link>
-                            <button type="button" onClick={() => handleEdit(category)}>
+                            <button 
+                                type="button" 
+                                className="edit-button"
+                                onClick={() => handleEdit(category)}>
                                 Edit
                             </button>
-                            <button type="button" onClick={() => handleDelete(category.id)}>
+                            <button 
+                                type="button" 
+                                className="delete-button" 
+                                onClick={() => handleDelete(category.id)}>
                                 Hapus
                             </button>
                         </div>
