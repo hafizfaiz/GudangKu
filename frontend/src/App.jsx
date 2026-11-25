@@ -1,5 +1,17 @@
 import { useEffect, useState } from 'react'
 import {
+  Package,
+  Layers,
+  Boxes,
+  AlertTriangle,
+  Wallet,
+  LayoutDashboard,
+  ClipboardList,
+  FileBarChart,
+  Users as UsersIcon,
+  LogOut,
+} from 'lucide-react'
+import {
   NavLink,
   Routes,
   Route,
@@ -44,33 +56,50 @@ function Dashboard() {
 
   return (
     <>
-      <header>
-        <h1>Dashboard</h1>
-        <p>Selamat datang di sistem manajemen inventaris GudangKu.</p>
+      <header className="dashboard-header">
+        <div>
+          <span className="dashboard-label">OVERVIEW INVENTARIS</span>
+          <h1>Dashboard</h1>
+          <p>Selamat datang di GudangKu. Berikut ringkasan inventaris Anda.</p>
+        </div>
       </header>
-
       <section className="dashboard-cards">
         <div className="card">
+          <div className="card-icon">
+            <Package size={22} />
+          </div>
           <h3>Total Produk</h3>
           <p>{dashboard.total_products}</p>
+          <span className="card-caption">Produk terdaftar</span>
         </div>
-
         <div className="card">
+          <div className="card-icon">
+            <Layers size={22} />
+          </div>
           <h3>Total Kategori</h3>
           <p>{dashboard.total_categories}</p>
+          <span className="card-caption">Kategori produk</span>
         </div>
-
         <div className="card">
+          <div className="card-icon">
+            <Boxes size={22} />
+          </div>
           <h3>Total Stok</h3>
           <p>{dashboard.total_stock}</p>
+          <span className="card-caption">Unit tersedia</span>
         </div>
-
         <div className="card">
+          <div className="card-icon">
+            <AlertTriangle size={22} />
+          </div>
           <h3>Stok Rendah</h3>
           <p>{dashboard.total_low_stock_products}</p>
+          <span className="card-caption">Produk perlu diperhatikan</span>
         </div>
-
         <div className="card">
+          <div className="card-icon">
+            <Wallet size={22} />
+          </div>
           <h3>Nilai Inventaris</h3>
           <p>
             {new Intl.NumberFormat('id-ID', {
@@ -79,6 +108,7 @@ function Dashboard() {
               maximumFractionDigits: 0,
             }).format(Number(dashboard.inventory_value))}
           </p>
+          <span className="card-caption">Berdasarkan harga beli</span>
         </div>
       </section>
     </>
@@ -142,42 +172,58 @@ function App() {
           ) : (
             <div className="app">
               <aside className="sidebar">
-                <h2>GudangKu</h2>
-                <p>Inventory Management</p>
+                <div className="sidebar-brand">
+                  <div className="brand-icon">
+                    <Boxes size={25} />
+                  </div>
+                  <div>
+                    <h2>GudangKu</h2>
+                    <p>Inventory Management</p>
+                  </div>
+                </div>
                 {user && (
                   <div className="user-info">
                     <p>{user.name}</p>
                     <small>Role: {user.role}</small>
+                    <hr />
                   </div>
                 )}
-                <nav>
-                  <NavLink to="/" end>
-                    Dashboard
-                  </NavLink>
+              <nav>
+                <NavLink to="/" end>
+                  <LayoutDashboard size={18} />
+                  <span>Dashboard</span>
+                </NavLink>
 
-                  <NavLink to="/products">
-                    Produk
-                  </NavLink>
+                <NavLink to="/products">
+                  <Package size={18} />
+                  <span>Produk</span>
+                </NavLink>
 
-                  <NavLink to="/categories">
-                    Kategori
-                  </NavLink>
+                <NavLink to="/categories">
+                  <ClipboardList size={18} />
+                  <span>Kategori</span>
+                </NavLink>
 
-                  <NavLink to="/reports">
-                    Laporan
+                <NavLink to="/reports">
+                  <FileBarChart size={18} />
+                  <span>Laporan</span>
+                </NavLink>
+
+                {user?.role === 'admin' && (
+                  <NavLink to="/users">
+                    <UsersIcon size={18} />
+                    <span>Manajemen Pengguna</span>
                   </NavLink>
-                  {user?.role === 'admin' && (
-                    <NavLink to="/users">
-                      Manajemen Pengguna
-                    </NavLink>
-                  )}
-                  <button
-                    onClick={handleLogout}
-                    className="logout-button"
-                  >
-                    Logout
-                  </button>
-                </nav>
+                )}
+
+                <button
+                  className="logout-button"
+                  onClick={handleLogout}
+                >
+                  <LogOut size={18} />
+                  <span>Logout</span>
+                </button>
+              </nav>
               </aside>
 
               <main className="main-content">

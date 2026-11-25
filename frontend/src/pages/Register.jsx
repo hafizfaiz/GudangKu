@@ -36,7 +36,8 @@ function Register() {
 
     return (
     <div className="form-container">
-        <h2>Registrasi Pengguna GudangKu</h2>
+        <h1>GudangKu</h1>
+        <h2>Registrasi Pengguna</h2>
 
         {error && <p style={{ color: 'red' }}>{error}</p>}
 

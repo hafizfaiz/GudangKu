@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 import api from '../services/api'
 
 function Login({ setIsAuthenticated, setUser }) {
@@ -39,7 +39,8 @@ function Login({ setIsAuthenticated, setUser }) {
 
     return (
         <div className="form-container">
-            <h2>Login GudangKu</h2>
+            <h1>GudangKu</h1>
+            <h2>Login</h2>
 
             {error && <p style={{ color: 'red' }}>{error}</p>}
 
@@ -70,6 +71,9 @@ function Login({ setIsAuthenticated, setUser }) {
                     {loading ? 'Memproses...' : 'Login'}
                 </button>
             </form>
+                    <p>
+                        Belum punya akun? <Link to="/register">Daftar</Link>
+                    </p>
         </div>
     )
 }

@@ -33,7 +33,12 @@ class AuthController extends Controller
             'password' => 'required|string|min:8',
         ]);
 
-        $user = User::create($validated);
+        $user = User::create([
+            'name' => $validated['name'],
+            'email' => $validated['email'],
+            'password' => $validated['password'],
+            'role' => 'staff',
+        ]);
 
         $token = $user->createToken('auth_token')->plainTextToken;
 
