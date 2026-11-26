@@ -35,9 +35,10 @@ function Register() {
     }
 
     return (
-    <div className="form-container">
+    <div className="screen">
+    <div className="form-container-auth">
         <h1>GudangKu</h1>
-        <h2>Registrasi Pengguna</h2>
+        <h2>Registrasi</h2>
 
         {error && <p style={{ color: 'red' }}>{error}</p>}
 
@@ -86,8 +87,9 @@ function Register() {
         </form>
 
         <p>
-        Sudah punya akun? <Link to="/login">Login</Link>
+        Sudah punya akun? <Link to="/login">Masuk</Link>
         </p>
+    </div>
     </div>
     )
 }

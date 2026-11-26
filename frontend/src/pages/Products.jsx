@@ -4,8 +4,7 @@ import {
     Plus,
     Search,
     Pencil,
-    Trash2,
-    SlidersHorizontal,
+    Trash2
 } from 'lucide-react'
 import api from '../services/api'
 
@@ -422,11 +421,6 @@ function Products() {
 
             {/* Pencarian dan filter */}
             <div className="product-filters">
-                <div className="filter-heading">
-                    <SlidersHorizontal size={18} />
-                    <span>Filter:</span>
-                </div>
-
                 <div className="search-container">
                     <Search size={18} />
                     <input
@@ -436,7 +430,6 @@ function Products() {
                         onChange={(e) => setSearch(e.target.value)}
                     />
                 </div>
-
                 <div className="filter-container">
                     <select
                         value={categoryId}

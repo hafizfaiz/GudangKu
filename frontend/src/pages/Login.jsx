@@ -38,43 +38,46 @@ function Login({ setIsAuthenticated, setUser }) {
     }
 
     return (
-        <div className="form-container">
-            <h1>GudangKu</h1>
-            <h2>Login</h2>
+        <div className="screen">
+            <div className="form-container-auth">
+                <h1>GudangKu</h1>
+                <h2>Masuk</h2>
 
-            {error && <p style={{ color: 'red' }}>{error}</p>}
+                {error && <p style={{ color: 'red' }}>{error}</p>}
 
-            <form onSubmit={handleLogin}>
-                <div className="form-group">
-                    <label>Email</label>
-                    <input
-                        type="email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        placeholder="Masukkan email"
-                        required
-                    />
-                </div>
+                <form onSubmit={handleLogin}>
+                    <div className="form-group">
+                        <label>Email</label>
+                        <input
+                            type="email"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            placeholder="Masukkan email"
+                            required
+                        />
+                    </div>
 
-                <div className="form-group">
-                    <label>Password</label>
-                    <input
-                        type="password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        placeholder="Masukkan password"
-                        required
-                    />
-                </div>
+                    <div className="form-group">
+                        <label>Password</label>
+                        <input
+                            type="password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            placeholder="Masukkan password"
+                            required
+                        />
+                    </div>
 
-                <button type="submit" className="save-button" disabled={loading}>
-                    {loading ? 'Memproses...' : 'Login'}
-                </button>
-            </form>
-                    <p>
-                        Belum punya akun? <Link to="/register">Daftar</Link>
-                    </p>
+                    <button type="submit" className="save-button" disabled={loading}>
+                        {loading ? 'Memproses...' : 'Masuk'}
+                    </button>
+                </form>
+                        <p>
+                            Belum punya akun? <Link to="/register">Daftar</Link>
+                        </p>
+            </div>
         </div>
+
     )
 }
 

@@ -8,6 +8,7 @@ import {
   LayoutDashboard,
   ClipboardList,
   FileBarChart,
+  PanelLeftClose,
   Users as UsersIcon,
   LogOut,
 } from 'lucide-react'
@@ -141,6 +142,13 @@ function App() {
     }
   }
 
+  const sidebar = document.getElementById("sidebar");
+  const toggle = document.getElementById("toggleSidebar");
+
+  toggle.addEventListener("click", function () {
+      sidebar.classList.toggle("collapsed");
+  });
+
   return (
     <Routes location={location}>
       <Route
@@ -160,7 +168,7 @@ function App() {
         element={
           isAuthenticated
             ? <Navigate to="/" replace />
-            : <Register />
+            : <Register/>
         }
       />
 
@@ -172,58 +180,65 @@ function App() {
           ) : (
             <div className="app">
               <aside className="sidebar">
-                <div className="sidebar-brand">
-                  <div className="brand-icon">
-                    <Boxes size={25} />
+                  
+                <nav>
+                  <div className="side">
+                      <div>
+                        <div className="sidebar-brand">
+                          <div className="brand-icon">
+                            <Boxes size={25} />
+                          </div>
+                          <div>
+                            <h2>GudangKu</h2>
+                            <p>Inventory Management</p>
+                          </div>
+                          <div id="toggleSidebar" className="toggle-btn">
+                            <button className="PanelLeftClose" onClick={toggle}>
+                              <PanelLeftClose class="PanelLeftClose" size={30} />
+                            </button>
+                          </div>
+                        </div>
+                        {user && (
+                          <div className="user-info">
+                            <p>{user.name}</p>
+                            <small>Role: {user.role}</small>
+                            <hr />
+                          </div>
+                        )}
+                          <NavLink to="/" end>
+                            <LayoutDashboard size={18} />
+                            <span>Dashboard</span>
+                          </NavLink>
+                          <NavLink to="/products">
+                            <Package size={18} />
+                            <span>Produk</span>
+                          </NavLink>
+                          <NavLink to="/categories">
+                            <ClipboardList size={18} />
+                            <span>Kategori</span>
+                          </NavLink>
+                          <NavLink to="/reports">
+                            <FileBarChart size={18} />
+                            <span>Laporan</span>
+                          </NavLink>
+                          {user?.role === 'admin' && (
+                            <NavLink to="/users">
+                              <UsersIcon size={18} />
+                              <span>Manajemen Pengguna</span>
+                            </NavLink>
+                          )}
+                      </div>
+                      <div>
+                        <button
+                          className="logout-button"
+                          onClick={handleLogout}
+                        >
+                          <LogOut size={18} />
+                          <span>Logout</span>
+                        </button>
+                      </div>
                   </div>
-                  <div>
-                    <h2>GudangKu</h2>
-                    <p>Inventory Management</p>
-                  </div>
-                </div>
-                {user && (
-                  <div className="user-info">
-                    <p>{user.name}</p>
-                    <small>Role: {user.role}</small>
-                    <hr />
-                  </div>
-                )}
-              <nav>
-                <NavLink to="/" end>
-                  <LayoutDashboard size={18} />
-                  <span>Dashboard</span>
-                </NavLink>
-
-                <NavLink to="/products">
-                  <Package size={18} />
-                  <span>Produk</span>
-                </NavLink>
-
-                <NavLink to="/categories">
-                  <ClipboardList size={18} />
-                  <span>Kategori</span>
-                </NavLink>
-
-                <NavLink to="/reports">
-                  <FileBarChart size={18} />
-                  <span>Laporan</span>
-                </NavLink>
-
-                {user?.role === 'admin' && (
-                  <NavLink to="/users">
-                    <UsersIcon size={18} />
-                    <span>Manajemen Pengguna</span>
-                  </NavLink>
-                )}
-
-                <button
-                  className="logout-button"
-                  onClick={handleLogout}
-                >
-                  <LogOut size={18} />
-                  <span>Logout</span>
-                </button>
-              </nav>
+                </nav>
               </aside>
 
               <main className="main-content">
