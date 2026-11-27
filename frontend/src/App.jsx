@@ -142,12 +142,15 @@ function App() {
     }
   }
 
-  const sidebar = document.getElementById("sidebar");
-  const toggle = document.getElementById("toggleSidebar");
+  const [isCollapsed, setIsCollapsed] = useState(false);
 
-  toggle.addEventListener("click", function () {
-      sidebar.classList.toggle("collapsed");
-  });
+  const toggleSidebar = () => {
+    setIsCollapsed(true);
+  };
+  const expandSidebar = () => {
+    setIsCollapsed(false)
+  };
+
 
   return (
     <Routes location={location}>
@@ -179,64 +182,91 @@ function App() {
             <Navigate to="/login" replace />
           ) : (
             <div className="app">
-              <aside className="sidebar">
-                  
+              <aside className={`sidebar ${isCollapsed ? "collapsed" : ""}`}>                
                 <nav>
                   <div className="side">
                       <div>
                         <div className="sidebar-brand">
-                          <div className="brand-icon">
-                            <Boxes size={25} />
+                          <div className="brand-icon" onClick={expandSidebar}>
+                            <Boxes size={25}/>
                           </div>
+                          {!isCollapsed && (
                           <div>
                             <h2>GudangKu</h2>
                             <p>Inventory Management</p>
                           </div>
+                          )}
+                          {!isCollapsed && (
                           <div id="toggleSidebar" className="toggle-btn">
-                            <button className="PanelLeftClose" onClick={toggle}>
-                              <PanelLeftClose class="PanelLeftClose" size={30} />
+                            <button onClick={toggleSidebar}>
+                              <PanelLeftClose className="PanelLeftClose" size={23} />
                             </button>
                           </div>
-                        </div>
-                        {user && (
+                          )}
+                          </div>
+                          {!isCollapsed && user && (
                           <div className="user-info">
                             <p>{user.name}</p>
                             <small>Role: {user.role}</small>
                             <hr />
                           </div>
-                        )}
+                          )}
                           <NavLink to="/" end>
-                            <LayoutDashboard size={18} />
-                            <span>Dashboard</span>
+                            <LayoutDashboard size={18} />                  
+                            <span>
+                            {!isCollapsed && (
+                              <p>Dashboard</p>
+                            )}
+                            </span>
                           </NavLink>
                           <NavLink to="/products">
                             <Package size={18} />
-                            <span>Produk</span>
+                            <span>
+                            {!isCollapsed && (
+                              <p>Produk</p>
+                            )}
+                            </span>
                           </NavLink>
                           <NavLink to="/categories">
                             <ClipboardList size={18} />
-                            <span>Kategori</span>
+                            <span>
+                            {!isCollapsed && (
+                              <p>Kategori</p>
+                            )}
+                            </span>
                           </NavLink>
                           <NavLink to="/reports">
                             <FileBarChart size={18} />
-                            <span>Laporan</span>
+                            <span>
+                            {!isCollapsed && (
+                              <p>Laporan</p>
+                            )}
+                            </span>
                           </NavLink>
                           {user?.role === 'admin' && (
                             <NavLink to="/users">
                               <UsersIcon size={18} />
-                              <span>Manajemen Pengguna</span>
+                              <span>
+                            {!isCollapsed && (
+                              <p>Manajemen Pengguna</p>
+                            )}
+                            </span>
                             </NavLink>
                           )}
-                      </div>
-                      <div>
-                        <button
-                          className="logout-button"
-                          onClick={handleLogout}
-                        >
-                          <LogOut size={18} />
-                          <span>Logout</span>
-                        </button>
-                      </div>
+                        </div>
+                        <div>
+                          <button
+                            className="logout-button"
+                            onClick={handleLogout}
+                          >
+                            <LogOut size={18} />
+                            <span>
+                              {!isCollapsed && (
+                                <h4>Keluar</h4>
+                              )}
+                            </span>
+                          </button>
+                        </div>
                   </div>
                 </nav>
               </aside>
